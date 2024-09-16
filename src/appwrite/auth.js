@@ -51,8 +51,6 @@ export class AuthService {
             await this.account.get();
         } catch (error) {
             console.log("Mubarak ho error aaya hai!!!", error);
-            
-            throw new error; 
         }
 
         return null;

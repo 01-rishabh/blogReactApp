@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import { useDispatch } from 'react-redux'
 import authService from './appwrite/auth'
+import {Header, Footer} from './components/index'
 import {login, logout} from './store/authSlice'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -12,22 +14,28 @@ function App() {
     authService.getCurrentUser()
       .then((userdata) => {
         if(userdata){
-          useDispatch(login({userdata}))
+          dispatch(login({userdata}))
         }
         else{
-          useDispatch(logout())
+          dispatch(logout())
         }
       })
-      .finally(setLoading(false))
+      .finally(() => setLoading(false))
   }, [])
     
 
   //conditional rendering
-  return !loading ? (
-    <>
-      <h1>Welcome to the Mega Blog App!</h1>
-    </>
-  ) : (null) 
+  return !loading ?  (
+   <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+    <div className='w-full block'>
+      <Header />
+      <main>
+        {}
+      </main>
+      <Footer />
+    </div>
+   </div>
+  ) : null
 }
 
 export default App
